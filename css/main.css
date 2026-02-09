@@ -1,0 +1,432 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* 头部 */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-secondary {
+    background: #e0e7ff;
+    color: #667eea;
+}
+
+.btn-secondary:hover {
+    background: #c7d2fe;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-large {
+    padding: 15px 40px;
+    font-size: 1.2em;
+}
+
+/* 主内容区域 */
+main {
+    padding: 30px;
+}
+
+/* 各个区块 */
+section {
+    margin-bottom: 40px;
+}
+
+section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* 地球区域 */
+.earth-section {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.selected-student {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f0f9ff;
+    border-radius: 12px;
+    font-size: 1.2em;
+}
+
+.selected-student .label {
+    color: #666;
+    margin-right: 10px;
+}
+
+.selected-student .name {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* 签到区域 */
+.attendance-section {
+    background: #f8fafc;
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.attendance-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.attendance-buttons .btn {
+    min-width: 120px;
+}
+
+.note-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.note-input label {
+    font-weight: 500;
+}
+
+.note-input input {
+    flex: 1;
+    max-width: 400px;
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.note-input input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* 记录筛选 */
+.records-filters {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+}
+
+.filter-group input {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+.filter-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* 表格样式 */
+.records-table-wrapper,
+.students-table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.records-table,
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.records-table th,
+.records-table td,
+.students-table th,
+.students-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.records-table th,
+.students-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #475569;
+}
+
+.records-table tr:hover,
+.students-table tr:hover {
+    background: #f8fafc;
+}
+
+.records-table td,
+.students-table td {
+    color: #334155;
+}
+
+.empty-message {
+    text-align: center !important;
+    color: #94a3b8 !important;
+    font-style: italic;
+}
+
+/* 状态标签 */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-present {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-late {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-absent {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-normal {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+/* 模态框 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.modal-close {
+    font-size: 2em;
+    cursor: pointer;
+    color: #94a3b8;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #475569;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 导入预览 */
+.import-preview {
+    max-height: 300px;
+    overflow-y: auto;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.import-preview-item {
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.import-preview-item:last-child {
+    border-bottom: none;
+}
+
+/* 导出选项 */
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .attendance-buttons {
+        flex-direction: column;
+    }
+
+    .records-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .note-input {
+        flex-direction: column;
+    }
+
+    .note-input input {
+        max-width: 100%;
+    }
+}

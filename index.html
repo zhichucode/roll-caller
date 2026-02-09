@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课堂点名器</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/earth.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>课堂点名器</h1>
+            <div class="header-actions">
+                <button id="importBtn" class="btn btn-secondary">导入名单</button>
+                <input type="file" id="csvInput" accept=".csv" style="display: none;">
+                <button id="exportBtn" class="btn btn-secondary">导出记录</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- 3D地球区域 -->
+            <section class="earth-section">
+                <div class="earth-container">
+                    <div class="earth" id="earth">
+                        <div class="earth-surface"></div>
+                        <div class="names-container" id="namesContainer"></div>
+                    </div>
+                </div>
+                <div class="selected-student" id="selectedStudent">
+                    <span class="label">被选中的学生:</span>
+                    <span class="name" id="studentName">-</span>
+                </div>
+                <button id="drawBtn" class="btn btn-primary btn-large">开始点名</button>
+            </section>
+
+            <!-- 签到状态选择 -->
+            <section class="attendance-section" id="attendanceSection" style="display: none;">
+                <h2>签到状态</h2>
+                <div class="attendance-buttons">
+                    <button class="btn btn-success" data-status="present">出席</button>
+                    <button class="btn btn-warning" data-status="late">迟到</button>
+                    <button class="btn btn-danger" data-status="absent">缺席</button>
+                </div>
+                <div class="note-input">
+                    <label for="note">备注:</label>
+                    <input type="text" id="note" placeholder="可选备注信息">
+                    <button id="confirmBtn" class="btn btn-primary">确认记录</button>
+                </div>
+            </section>
+
+            <!-- 签到记录 -->
+            <section class="records-section">
+                <h2>签到记录</h2>
+                <div class="records-filters">
+                    <div class="filter-group">
+                        <label for="startDate">开始日期:</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <div class="filter-group">
+                        <label for="endDate">结束日期:</label>
+                        <input type="date" id="endDate">
+                    </div>
+                    <button id="filterBtn" class="btn btn-secondary">筛选</button>
+                    <button id="exportFilteredBtn" class="btn btn-secondary">导出筛选结果</button>
+                </div>
+                <div class="records-table-wrapper">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>学生</th>
+                                <th>状态</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsBody">
+                            <tr>
+                                <td colspan="4" class="empty-message">暂无记录</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 学生列表 -->
+            <section class="students-section">
+                <h2>学生名单 <span id="studentCount">(0)</span></h2>
+                <div class="students-table-wrapper">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>权重</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsBody">
+                            <tr>
+                                <td colspan="4" class="empty-message">暂无学生，请导入名单</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- 导入预览模态框 -->
+        <div id="importModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>导入预览</h2>
+                    <span class="modal-close" id="closeModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>将导入 <span id="importCount">0</span> 名学生:</p>
+                    <div class="import-preview" id="importPreview"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelImport" class="btn btn-secondary">取消</button>
+                    <button id="confirmImport" class="btn btn-primary">确认导入</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 导出选项模态框 -->
+        <div id="exportModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>导出记录</h2>
+                    <span class="modal-close" id="closeExportModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="export-options">
+                        <div class="filter-group">
+                            <label for="exportStartDate">开始日期:</label>
+                            <input type="date" id="exportStartDate">
+                        </div>
+                        <div class="filter-group">
+                            <label for="exportEndDate">结束日期:</label>
+                            <input type="date" id="exportEndDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelExport" class="btn btn-secondary">取消</button>
+                    <button id="confirmExport" class="btn btn-primary">导出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/import.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/earth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

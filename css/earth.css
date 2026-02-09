@@ -1,0 +1,172 @@
+/* 3D地球容器 */
+.earth-container {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    margin: 20px 0;
+}
+
+/* 地球主体 */
+.earth {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate 20s linear infinite;
+    box-shadow: 0 0 60px rgba(79, 172, 254, 0.4),
+                inset 0 0 60px rgba(0, 0, 0, 0.2);
+}
+
+/* 地球表面 */
+.earth-surface {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 50%, #0061ff 100%);
+    opacity: 0.8;
+}
+
+/* 名字容器 */
+.names-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* 单个名字元素 */
+.name-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-style: preserve-3d;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    padding: 8px 16px;
+    background: rgba(102, 126, 234, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.name-item:hover {
+    background: rgba(102, 126, 234, 1);
+    transform: scale(1.1) translateZ(20px);
+}
+
+/* 旋转动画 */
+@keyframes rotate {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+/* 快速旋转动画（点名时） */
+@keyframes rotate-fast {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.earth.rolling {
+    animation: rotate-fast 2s linear infinite;
+}
+
+/* 停止动画 */
+.earth.stopped {
+    animation-play-state: paused;
+}
+
+/* 选中动画 */
+@keyframes select {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 60px rgba(79, 172, 254, 0.4);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 100px rgba(79, 172, 254, 0.8),
+                    0 0 150px rgba(79, 172, 254, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 60px rgba(79, 172, 254, 0.4);
+    }
+}
+
+.earth.selected {
+    animation: select 0.6s ease-in-out;
+}
+
+/* 名字高亮效果 */
+.name-item.highlighted {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    transform: scale(1.3) translateZ(50px);
+    box-shadow: 0 8px 20px rgba(240, 147, 251, 0.5);
+    z-index: 100;
+}
+
+/* 装饰性网格线 */
+.earth::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 19px,
+        rgba(255, 255, 255, 0.05) 20px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 19px,
+        rgba(255, 255, 255, 0.05) 20px
+    );
+}
+
+/* 高光效果 */
+.earth::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    top: 20px;
+    left: 30px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .earth {
+        width: 200px;
+        height: 200px;
+    }
+
+    .name-item {
+        font-size: 1em;
+        padding: 6px 12px;
+    }
+
+    .earth-container {
+        height: 300px;
+    }
+}
