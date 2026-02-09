@@ -87,12 +87,12 @@ class RollCallerApp {
     // 权重随机选择算法
     selectStudent() {
         if (this.students.length === 0) {
-            alert('请先导入学生名单');
+            notify.warning('请先导入学生名单');
             return null;
         }
 
         // 计算总权重
-        const totalWeight = this.students.reduce((sum, student) => sum + student.weight, 0);
+        const totalWeight = this.students.reduce((sum, student) => sum + student.weight, 1);
 
         // 生成随机数
         let random = Math.random() * totalWeight;
@@ -113,7 +113,7 @@ class RollCallerApp {
     async startDraw() {
         if (this.isAnimating) return;
         if (this.students.length === 0) {
-            alert('请先导入学生名单');
+            notify.warning('请先导入学生名单');
             return;
         }
 
@@ -183,7 +183,7 @@ class RollCallerApp {
 
         this.currentStudent = null;
 
-        alert('签到记录已保存');
+        notify.success('签到记录已保存');
     }
 
     // 重置学生权重
@@ -194,9 +194,11 @@ class RollCallerApp {
 
     // 删除学生
     async deleteStudent(id) {
-        if (confirm('确定要删除这个学生吗？')) {
+        const confirmed = await notify.confirmDelete('确定要删除这个学生吗？此操作无法撤销。');
+        if (confirmed) {
             await storage.deleteStudent(id);
             await this.loadStudents();
+            notify.success('学生已删除');
         }
     }
 

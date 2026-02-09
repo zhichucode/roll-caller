@@ -54,7 +54,7 @@ class ExportManager {
             }
 
             if (records.length === 0) {
-                alert('没有记录可以导出');
+                notify.warning('没有记录可以导出');
                 return false;
             }
 
@@ -69,10 +69,11 @@ class ExportManager {
             const filename = `签到记录_${dateStr}.csv`;
 
             this.downloadCSV(csv, filename);
+            notify.success('导出成功');
             return true;
         } catch (error) {
             console.error('导出失败:', error);
-            alert('导出失败，请重试');
+            notify.error('导出失败，请重试');
             return false;
         }
     }

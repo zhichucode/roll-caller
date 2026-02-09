@@ -100,15 +100,39 @@ class ImportManager {
     // 导入默认名单
     async importDefaultList() {
         try {
-            const response = await fetch('generated_00hou_100.csv');
-            if (!response.ok) {
-                throw new Error('无法加载默认名单文件');
+            // 尝试使用fetch加载CSV文件
+            let response, text;
+
+            // 尝试多个可能的路径
+            const paths = [
+                'generated_00hou_100.csv',
+                './generated_00hou_100.csv',
+                '../generated_00hou_100.csv'
+            ];
+
+            for (const path of paths) {
+                try {
+                    response = await fetch(path);
+                    if (response.ok) {
+                        text = await response.text();
+                        break;
+                    }
+                } catch (e) {
+                    // 继续尝试下一个路径
+                    continue;
+                }
             }
-            const text = await response.text();
+
+            // 如果所有路径都失败，使用内嵌的默认数据
+            if (!text || !response || !response.ok) {
+                console.warn('无法加载CSV文件，使用内嵌默认数据');
+                text = this.getDefaultCSVData();
+            }
+
             const students = this.parseCSV(text);
 
             if (students.length === 0) {
-                alert('默认名单文件为空或格式错误');
+                notify.error('默认名单文件为空或格式错误');
                 return false;
             }
 
@@ -116,9 +140,109 @@ class ImportManager {
             return true;
         } catch (error) {
             console.error('导入默认名单失败:', error);
-            alert('导入默认名单失败，请检查文件是否存在');
+            notify.error('导入默认名单失败，请检查文件是否存在');
             return false;
         }
+    }
+
+    // 获取默认CSV数据（内嵌备用数据）
+    getDefaultCSVData() {
+        return `王佳怡
+李俊杰
+张梓涵
+刘子豪
+陈思源
+杨欣怡
+赵明轩
+黄子轩
+周雨辰
+吴梓萱
+徐亦凡
+孙诗涵
+胡昊然
+朱馨予
+高嘉豪
+林梓睿
+何嘉怡
+郭宇翔
+马文轩
+罗思彤
+郑博文
+王皓轩
+李雅婷
+张俊杰
+陈思涵
+杨雨泽
+赵欣怡
+黄嘉懿
+周子轩
+吴宇萱
+徐浩宇
+孙雨桐
+胡梓萱
+朱嘉豪
+高子轩
+林思源
+何宇轩
+郭佳怡
+马梓轩
+罗昊天
+郑博文
+王雅萱
+李皓轩
+张雨泽
+刘子萱
+陈嘉懿
+杨浩然
+赵梓萱
+黄子轩
+周思源
+吴佳怡
+徐梓轩
+孙雅萱
+胡博文
+朱皓轩
+高雨萱
+林子轩
+何思涵
+郭嘉豪
+马梓萱
+罗宇轩
+郑雅婷
+王浩宇
+李梓萱
+张佳怡
+刘昊然
+陈子轩
+杨雨萱
+赵博文
+黄梓萱
+周浩宇
+吴思源
+徐佳怡
+孙皓轩
+胡雨萱
+朱子轩
+高博文
+林雅萱
+何梓轩
+郭浩然
+马思源
+罗佳怡
+郑梓萱
+王子轩
+李雨萱
+张皓轩
+刘博文
+陈梓萱
+杨佳轩
+赵昊然
+黄雅婷
+周子轩
+吴梓轩
+徐浩然
+孙思萱
+胡佳怡`;
     }
 }
 
@@ -156,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const students = importManager.parseCSV(text);
 
             if (students.length === 0) {
-                alert('未找到有效的学生数据，请检查CSV文件格式');
+                notify.error('未找到有效的学生数据，请检查CSV文件格式');
                 return;
             }
 
@@ -184,14 +308,14 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmImport.addEventListener('click', async () => {
         const count = await importManager.confirmImport();
         if (count !== false) {
-            alert(`成功导入 ${count} 名学生`);
+            notify.success(`成功导入 ${count} 名学生`);
             importModal.style.display = 'none';
             // 刷新学生列表
             if (typeof loadStudents === 'function') {
                 loadStudents();
             }
         } else {
-            alert('导入失败，请重试');
+            notify.error('导入失败，请重试');
         }
     });
 
