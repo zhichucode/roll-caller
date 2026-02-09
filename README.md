@@ -1,6 +1,8 @@
 # 课堂点名器/签到系统
 
-一个功能完整的课堂点名器Web应用，支持CSV导入学生名单、随机点名（带3D地球动画效果）、迟到记录加权重、以及完整的签到记录管理和导出功能。
+一个功能完整的课堂���名器Web应用，支持CSV导入学生名单、随机点名（带3D地球动画效果）、迟到记录加权重、以及完整的签到记录管理和导出功能。
+
+[在线演示](https://zhichucode.github.io/roll-caller/) | [GitHub仓库](https://github.com/zhichucode/roll-caller)
 
 ## 功能特性
 
