@@ -82,9 +82,10 @@ class ImportManager {
     // 确认导入
     async confirmImport() {
         try {
+            const count = this.pendingStudents.length;
             await storage.addStudents(this.pendingStudents);
             this.pendingStudents = [];
-            return true;
+            return count;
         } catch (error) {
             console.error('导入失败:', error);
             return false;
@@ -95,6 +96,30 @@ class ImportManager {
     cancelImport() {
         this.pendingStudents = [];
     }
+
+    // 导入默认名单
+    async importDefaultList() {
+        try {
+            const response = await fetch('generated_00hou_100.csv');
+            if (!response.ok) {
+                throw new Error('无法加载默认名单文件');
+            }
+            const text = await response.text();
+            const students = this.parseCSV(text);
+
+            if (students.length === 0) {
+                alert('默认名单文件为空或格式错误');
+                return false;
+            }
+
+            this.showPreview(students);
+            return true;
+        } catch (error) {
+            console.error('导入默认名单失败:', error);
+            alert('导入默认名单失败，请检查文件是否存在');
+            return false;
+        }
+    }
 }
 
 // 创建全局导入管理器实例
@@ -103,6 +128,7 @@ const importManager = new ImportManager();
 // 设置导入相关的事件监听
 document.addEventListener('DOMContentLoaded', () => {
     const importBtn = document.getElementById('importBtn');
+    const importDefaultBtn = document.getElementById('importDefaultBtn');
     const csvInput = document.getElementById('csvInput');
     const importModal = document.getElementById('importModal');
     const closeModal = document.getElementById('closeModal');
@@ -112,6 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 点击导入按钮
     importBtn.addEventListener('click', () => {
         csvInput.click();
+    });
+
+    // 点击导入默认名单按钮
+    importDefaultBtn.addEventListener('click', () => {
+        importManager.importDefaultList();
     });
 
     // 文件选择
@@ -151,9 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 确认导入
     confirmImport.addEventListener('click', async () => {
-        const success = await importManager.confirmImport();
-        if (success) {
-            alert(`成功导入 ${importManager.pendingStudents.length} 名学生`);
+        const count = await importManager.confirmImport();
+        if (count !== false) {
+            alert(`成功导入 ${count} 名学生`);
             importModal.style.display = 'none';
             // 刷新学生列表
             if (typeof loadStudents === 'function') {
